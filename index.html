@@ -100,15 +100,19 @@ main{padding:24px 0 48px}
 .card,.hero{cursor:pointer}
 .state{background:var(--card);border:1px dashed #CBD5E1;border-radius:14px;padding:40px 20px;text-align:center;color:var(--muted)}
 
-/* article modal: full text on click */
-.modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.65);z-index:50;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px;overflow-y:auto}
-.modal{background:var(--card);border-radius:16px;max-width:760px;width:100%;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35)}
-.modal .media{aspect-ratio:16/9}
-.modal .body{padding:24px 26px 28px;display:flex;flex-direction:column;gap:14px}
-.modal h2{font-weight:800;font-size:clamp(20px,3.4vw,28px);line-height:1.7}
-.modal p{color:#334155;font-size:17px}
-.modal-close{margin-top:8px;align-self:flex-start;background:var(--red);color:#fff;border:0;border-radius:999px;padding:8px 22px;font:inherit;font-weight:700;cursor:pointer}
-.modal-close:hover{background:var(--red-d)}
+/* article page: full photo and details, like professional news sites */
+.article{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(15,23,42,.06)}
+.article .media{aspect-ratio:auto}
+.article .media img{height:auto;max-height:560px;object-fit:contain;background:#0F172A}
+.article .body{padding:28px 30px 32px;display:flex;flex-direction:column;gap:16px}
+.article h1{font-weight:800;font-size:clamp(22px,3.6vw,32px);line-height:1.7}
+.article p{color:#334155;font-size:18px}
+.back-btn{align-self:flex-start;background:var(--blue);color:#fff;border:0;border-radius:999px;padding:8px 22px;font:inherit;font-weight:700;cursor:pointer}
+.back-btn:hover{background:var(--blue-d)}
+.share{display:flex;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px}
+.share a{display:inline-flex;padding:6px 16px;border:1px solid var(--line);border-radius:999px;font-weight:700;font-size:14px}
+.share a:hover{border-color:var(--red);color:var(--red)}
+.related-title{margin:28px 0 16px;font-family:var(--display);font-size:26px;color:var(--blue)}
 
 /* footer */
 footer{background:var(--blue-d);color:#CBD7EE;margin-top:20px}
@@ -175,6 +179,7 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
 </div>
 
 <main class="wrap">
+  <section id="articleView" hidden aria-label="متن کامل خبر"></section>
   <section id="hero" aria-label="خبر برجسته"></section>
   <h2 class="sec-title" id="gridTitle">تازه‌ترین خبرها</h2>
   <section class="grid" id="grid" aria-live="polite"></section>
@@ -259,39 +264,65 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
     return h;
   }
 
-  function openModal(item) {
-    closeModal();
-    var back = el('div', 'modal-backdrop');
-    back.setAttribute('role', 'dialog');
-    back.setAttribute('aria-modal', 'true');
-    var box = el('article', 'modal');
+  var articleIdx = null;
+
+  function openArticle(item) {
+    var idx = all.indexOf(item);
+    if (idx < 0) return;
+    if (articleIdx === idx) return;
+    articleIdx = idx;
+    if (history.replaceState) history.replaceState(null, '', '#article-' + idx);
+    renderArticle();
+    window.scrollTo(0, 0);
+  }
+  function closeArticle() {
+    articleIdx = null;
+    if (history.replaceState) history.replaceState(null, '', location.pathname);
+    $('articleView').hidden = true;
+    $('articleView').textContent = '';
+    document.title = 'تیتر روز | خبرهای تازه افغانستان و جهان';
+    render();
+  }
+  function renderArticle() {
+    var item = all[articleIdx];
+    if (!item) { closeArticle(); return; }
+    document.title = item.title + ' | تیتر روز';
+    $('hero').hidden = true;
+    $('gridTitle').hidden = true;
+    $('grid').hidden = true;
+    var view = $('articleView');
+    view.hidden = false;
+    view.textContent = '';
+    var box = el('article', 'article');
     box.appendChild(media(item));
     var b = el('div', 'body');
+    var back = el('button', 'back-btn', '← بازگشت به خبرها');
+    back.type = 'button';
+    back.addEventListener('click', closeArticle);
+    b.appendChild(back);
     b.appendChild(meta(item));
-    b.appendChild(el('h2', null, item.title));
+    b.appendChild(el('h1', null, item.title));
     b.appendChild(el('p', null, item.summary));
-    var close = el('button', 'modal-close', 'بستن');
-    close.type = 'button';
-    close.addEventListener('click', closeModal);
-    b.appendChild(close);
+    var share = el('div', 'share');
+    var fb = el('a', null, 'فیسبوک تیتر روز'); fb.href = 'https://www.facebook.com/mrrtfarsi'; fb.target = '_blank'; fb.rel = 'noopener';
+    var tg = el('a', null, 'تلگرام تیتر روز'); tg.href = 'https://t.me/TitrRoozNews'; tg.target = '_blank'; tg.rel = 'noopener';
+    share.appendChild(fb); share.appendChild(tg);
+    b.appendChild(share);
     box.appendChild(b);
-    back.appendChild(box);
-    back.addEventListener('click', function (e) { if (e.target === back) closeModal(); });
-    document.addEventListener('keydown', escClose);
-    document.body.appendChild(back);
-    document.body.style.overflow = 'hidden';
+    view.appendChild(box);
+    var related = sortNews(all.filter(function (n) { return n !== item && n.category === item.category; })).slice(0, 3);
+    if (!related.length) related = sortNews(all.filter(function (n) { return n !== item; })).slice(0, 3);
+    if (related.length) {
+      view.appendChild(el('h2', 'related-title', 'خبرهای مرتبط'));
+      var g = el('div', 'grid');
+      related.forEach(function (n) { g.appendChild(newsCard(n)); });
+      view.appendChild(g);
+    }
   }
-  function closeModal() {
-    var old = document.querySelector('.modal-backdrop');
-    if (old) old.remove();
-    document.removeEventListener('keydown', escClose);
-    document.body.style.overflow = '';
-  }
-  function escClose(e) { if (e.key === 'Escape') closeModal(); }
 
   function heroCard(item) {
     var box = el('article', 'hero');
-    box.addEventListener('click', function () { openModal(item); });
+    box.addEventListener('click', function () { openArticle(item); });
     box.appendChild(media(item));
     var b = el('div', 'body');
     b.appendChild(meta(item));
@@ -303,7 +334,7 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
 
   function newsCard(item) {
     var c = el('article', 'card');
-    c.addEventListener('click', function () { openModal(item); });
+    c.addEventListener('click', function () { openArticle(item); });
     c.appendChild(media(item));
     var b = el('div', 'body');
     b.appendChild(headline('h3', item));
@@ -323,6 +354,15 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
   }
 
   function render() {
+    if (articleIdx !== null && document.querySelector('#articleView') && !$('articleView').hidden) {
+      /* category change while reading: return to the list first */
+      articleIdx = null;
+      $('articleView').hidden = true;
+      $('articleView').textContent = '';
+      document.title = 'تیتر روز | خبرهای تازه افغانستان و جهان';
+    }
+    $('hero').hidden = false;
+    $('grid').hidden = false;
     var list = sortNews(current === 'همه' ? all : all.filter(function (n) { return n.category === current; }));
     var hero = $('hero'), grid = $('grid');
     hero.textContent = ''; grid.textContent = '';
@@ -383,6 +423,13 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
       all = (Array.isArray(data) ? data : []).filter(function (n) { return n && n.title && n.category && n.date; });
       buildTicker();
       render();
+      var m = /^#article-(\d+)$/.exec(location.hash);
+      if (m && all[+m[1]]) openArticle(all[+m[1]]);
+      window.addEventListener('hashchange', function () {
+        var mm = /^#article-(\d+)$/.exec(location.hash);
+        if (mm && all[+mm[1]]) { articleIdx = null; openArticle(all[+mm[1]]); }
+        else if (articleIdx !== null) { articleIdx = null; closeArticle(); }
+      });
     })
     .catch(function () {
       $('gridTitle').hidden = true;
