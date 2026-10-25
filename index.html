@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fa-AF" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تیتر روز | خبرهای تازه افغانستان و جهان</title>
+<meta name="description" content="تیتر روز؛ خبرهای تازه و مهم روز افغانستان و جهان، غزه و فلسطین و ورزش، به زبان ساده و روشن.">
+<meta name="theme-color" content="#0B3D91">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fa_AF">
+<meta property="og:site_name" content="تیتر روز">
+<meta property="og:title" content="تیتر روز | خبرهای تازه افغانستان و جهان">
+<meta property="og:description" content="تیتر های مهم روز افغانستان و جهان.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23D7141A'/%3E%3Ctext x='32' y='47' font-size='44' font-weight='900' text-anchor='middle' fill='white' font-family='Tahoma,Arial,sans-serif'%3E%D8%AA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F1F4F9; --card:#fff; --ink:#1E293B; --muted:#64748B; --line:#E2E8F0;
+  --red:#D7141A; --red-d:#B30F14; --blue:#0B3D91; --blue-d:#082B66;
+  --display:'Lalezar','Vazirmatn',Tahoma,sans-serif;
+  --body:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.8;font-size:16px}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:3px solid var(--red);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* brand strip */
+.strip{background:var(--blue);color:#fff;font-size:14px}
+.strip .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:42px;flex-wrap:wrap;padding-block:4px}
+.strip .date{font-weight:500}
+.social{display:flex;gap:8px}
+.social a{display:inline-flex;align-items:center;gap:6px;padding:2px 12px;border:1px solid rgba(255,255,255,.35);border-radius:999px;font-size:13px;transition:background .2s}
+.social a:hover{background:rgba(255,255,255,.15)}
+.social svg{width:15px;height:15px;fill:currentColor}
+
+/* header */
+.masthead{background:var(--card);border-bottom:1px solid var(--line)}
+.masthead .wrap{display:flex;align-items:center;gap:16px;padding-block:18px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:56px;height:56px;border-radius:14px;background:var(--red);color:#fff;font-family:var(--display);font-size:44px;line-height:56px;text-align:center;box-shadow:0 4px 0 var(--red-d)}
+.logo-text{font-family:var(--display);font-size:clamp(34px,6vw,52px);line-height:1;color:var(--red)}
+.logo-text small{display:block;font-family:var(--body);font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.5px;direction:ltr;text-align:right;margin-top:4px}
+.tagline{margin-inline-start:auto;font-weight:700;color:var(--blue);font-size:clamp(14px,2.4vw,18px);border-inline-start:4px solid var(--red);padding-inline-start:12px}
+
+/* nav */
+.nav{background:var(--blue-d);position:sticky;top:0;z-index:20}
+.nav .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav button{background:none;border:0;color:#DCE6F7;font:inherit;font-weight:700;padding:12px 18px;cursor:pointer;white-space:nowrap;border-bottom:4px solid transparent;transition:background .2s}
+.nav button:hover{background:rgba(255,255,255,.08)}
+.nav button[aria-current="true"]{color:#fff;border-bottom-color:var(--red);background:rgba(255,255,255,.1)}
+
+/* headlines bar */
+.ticker{background:var(--red);color:#fff;overflow:hidden}
+.ticker .wrap{display:flex;align-items:center;gap:14px;padding-block:0}
+.ticker-label{flex:none;background:var(--red-d);padding:6px 16px;font-family:var(--display);font-size:20px}
+.ticker-track{overflow:hidden;flex:1}
+.ticker-inner{display:inline-flex;gap:48px;white-space:nowrap;padding-inline-start:100%;animation:tick 60s linear infinite;font-size:14.5px;font-weight:500}
+.ticker-inner:hover{animation-play-state:paused}
+@keyframes tick{to{transform:translateX(100%)}}
+
+/* hero */
+main{padding:24px 0 48px}
+.hero{display:grid;grid-template-columns:1.35fr 1fr;background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--line);margin-bottom:28px;box-shadow:0 2px 12px rgba(15,23,42,.06)}
+.hero .media{min-height:340px;position:relative}
+.hero .body{padding:32px;display:flex;flex-direction:column;justify-content:center;gap:14px;border-inline-start:6px solid var(--red)}
+.hero h1{font-family:var(--body);font-weight:800;font-size:clamp(23px,3.4vw,34px);line-height:1.55}
+.hero p{color:#334155;font-size:17px}
+
+/* media + fallback */
+.media{background:linear-gradient(135deg,var(--blue-d),var(--blue));overflow:hidden;position:relative}
+.media img{width:100%;height:100%;object-fit:cover;display:block}
+.media.empty::after{content:"ت";position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:90px;color:rgba(255,255,255,.18)}
+
+/* meta */
+.meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.badge{background:var(--red);color:#fff;font-weight:700;font-size:12.5px;padding:1px 12px;border-radius:6px;line-height:1.9}
+.badge.b-جهان{background:var(--blue)}
+.badge.b-غزه-و-فلسطین{background:#0F7A4B}
+.badge.b-ورزش{background:#B45309}
+
+/* grid */
+.sec-title{display:flex;align-items:center;gap:12px;margin-bottom:16px;font-family:var(--display);font-size:28px;color:var(--blue)}
+.sec-title::before{content:"";width:8px;height:28px;background:var(--red);border-radius:3px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 6px rgba(15,23,42,.05);transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(15,23,42,.1)}
+.card .media{aspect-ratio:16/10}
+.card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card h3{font-weight:800;font-size:18px;line-height:1.7}
+.card p{color:#475569;font-size:15px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .meta{margin-top:auto;padding-top:6px;border-top:1px solid var(--line)}
+.card h3 a:hover,.hero h1 a:hover{color:var(--red)}
+.state{background:var(--card);border:1px dashed #CBD5E1;border-radius:14px;padding:40px 20px;text-align:center;color:var(--muted)}
+
+/* footer */
+footer{background:var(--blue-d);color:#CBD7EE;margin-top:20px}
+footer .wrap{display:grid;grid-template-columns:2fr 1fr;gap:28px;padding-block:36px}
+footer h2{font-family:var(--display);font-size:28px;color:#fff;margin-bottom:8px}
+footer h2 span{color:#FF5A5F}
+footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
+.copy{background:#06214F;text-align:center;font-size:13px;padding:10px 16px;color:#93A8CF}
+
+@media (max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .hero{grid-template-columns:1fr}
+  .hero .media{min-height:0;aspect-ratio:16/9}
+  .hero .body{border-inline-start:0;border-top:6px solid var(--red);padding:22px}
+}
+@media (max-width:600px){
+  .grid{grid-template-columns:1fr}
+  .masthead .wrap{flex-wrap:wrap}
+  .tagline{margin-inline-start:0;width:100%;border:0;padding:0}
+  .logo-mark{width:48px;height:48px;line-height:48px;font-size:38px}
+  footer .wrap{grid-template-columns:1fr}
+  .strip .wrap{justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .ticker-inner{animation:none;padding:0}
+  .card{transition:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="strip">
+  <div class="wrap">
+    <span class="date" id="today"></span>
+    <div class="social">
+      <a href="https://www.facebook.com/mrrtfarsi" target="_blank" rel="noopener" aria-label="صفحهٔ فیسبوک تیتر روز">
+        <svg viewBox="0 0 24 24"><path d="M13.5 22v-8.2h2.8l.5-3.3h-3.3V8.4c0-.9.4-1.7 1.8-1.7h1.6V3.8c-.3 0-1.3-.2-2.4-.2-2.5 0-4.1 1.5-4.1 4.2v2.7H7.6v3.3h2.8V22z"/></svg>فیسبوک</a>
+      <a href="https://t.me/TitrRoozNews" target="_blank" rel="noopener" aria-label="کانال تلگرام تیتر روز">
+        <svg viewBox="0 0 24 24"><path d="M9.8 15.6 9.5 20c.5 0 .7-.2 1-.5l2.3-2.2 4.8 3.500c.9.5 1.500.2 1.700-.8l3.100-14.600c.3-1.300-.5-1.800-1.300-1.500L1.900 10.900c-1.200.5-1.200 1.200-.2 1.500l4.600 1.400 10.700-6.700c.5-.3 1-.1.6.2z"/></svg>تلگرام</a>
+    </div>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="logo" href="./" aria-label="تیتر روز، صفحهٔ نخست">
+      <span class="logo-mark" aria-hidden="true">ت</span>
+      <span class="logo-text">تیتر روز<small>Titr Rooz News</small></span>
+    </a>
+    <p class="tagline">خبرهای تازه افغانستان و جهان</p>
+  </div>
+</header>
+
+<nav class="nav" aria-label="دسته‌بندی خبرها">
+  <div class="wrap" id="nav"></div>
+</nav>
+
+<div class="ticker" id="ticker" hidden>
+  <div class="wrap">
+    <span class="ticker-label">تیتر ها</span>
+    <div class="ticker-track"><div class="ticker-inner" id="tickerInner"></div></div>
+  </div>
+</div>
+
+<main class="wrap">
+  <section id="hero" aria-label="خبر برجسته"></section>
+  <h2 class="sec-title" id="gridTitle">تازه‌ترین خبرها</h2>
+  <section class="grid" id="grid" aria-live="polite"></section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <h2>درباره <span>تیتر روز</span></h2>
+      <p>تیتر روز یک رسانهٔ خبری فارسی است که مهم‌ترین رویدادهای افغانستان و جهان را به زبان ساده، روشن و بی‌طرفانه به شما می‌رساند. تمرکز ما بر خبرهای داخلی افغانستان است و در کنار آن، رویدادهای مهم جهان، غزه و فلسطین و ورزش را پوشش می‌دهیم.</p>
+    </div>
+    <div>
+      <h2 style="font-size:22px">ما را دنبال کنید</h2>
+      <div class="social">
+        <a href="https://www.facebook.com/mrrtfarsi" target="_blank" rel="noopener">فیسبوک</a>
+        <a href="https://t.me/TitrRoozNews" target="_blank" rel="noopener">تلگرام</a>
+      </div>
+    </div>
+  </div>
+  <div class="copy" id="copy"></div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var CATS = ['همه', 'افغانستان', 'جهان', 'غزه و فلسطین', 'ورزش'];
+  var MONTHS = ['حمل','ثور','جوزا','سرطان','اسد','سنبله','میزان','عقرب','قوس','جدی','دلو','حوت'];
+  var WEEK = ['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+  var AF = 'افغانستان';
+
+  var $ = function (id) { return document.getElementById(id); };
+  var all = [], current = 'همه';
+
+  /* Persian digits */
+  function fa(n) { return String(n).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); }
+
+  /* Afghan solar date (Hijri Shamsi) with Dari month names */
+  function solar(d) {
+    var p = new Intl.DateTimeFormat('en-u-ca-persian-nu-latn', { year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(d), o = {};
+    p.forEach(function (x) { o[x.type] = x.value; });
+    return fa(o.day) + ' ' + MONTHS[parseInt(o.month, 10) - 1] + ' ' + fa(o.year);
+  }
+  function parseDate(s) { var a = String(s).split('-'); return new Date(+a[0], (+a[1] || 1) - 1, +a[2] || 1, 12); }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function slug(c) { return c.replace(/\s+/g, '-'); }
+
+  function media(item) {
+    var m = el('div', 'media');
+    var img = new Image();
+    img.alt = item.title;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.onerror = function () { img.remove(); m.classList.add('empty'); };
+    img.src = item.image || '';
+    if (!item.image) { m.classList.add('empty'); } else { m.appendChild(img); }
+    return m;
+  }
+
+  function meta(item) {
+    var m = el('div', 'meta');
+    m.appendChild(el('span', 'badge b-' + slug(item.category), item.category));
+    var t = el('time', null, solar(parseDate(item.date)));
+    t.setAttribute('datetime', item.date);
+    m.appendChild(t);
+    return m;
+  }
+
+  function headline(tag, item) {
+    var h = el(tag);
+    if (item.link) {
+      var a = el('a', null, item.title);
+      a.href = item.link; a.target = '_blank'; a.rel = 'noopener';
+      h.appendChild(a);
+    } else { h.textContent = item.title; }
+    return h;
+  }
+
+  function heroCard(item) {
+    var box = el('article', 'hero');
+    box.appendChild(media(item));
+    var b = el('div', 'body');
+    b.appendChild(meta(item));
+    b.appendChild(headline('h1', item));
+    b.appendChild(el('p', null, item.summary));
+    box.appendChild(b);
+    return box;
+  }
+
+  function newsCard(item) {
+    var c = el('article', 'card');
+    c.appendChild(media(item));
+    var b = el('div', 'body');
+    b.appendChild(headline('h3', item));
+    b.appendChild(el('p', null, item.summary));
+    b.appendChild(meta(item));
+    c.appendChild(b);
+    return c;
+  }
+
+  /* newest first; on the same day Afghanistan comes first */
+  function sortNews(list) {
+    return list.slice().sort(function (a, b) {
+      var d = parseDate(b.date) - parseDate(a.date);
+      if (d) return d;
+      return (b.category === AF) - (a.category === AF);
+    });
+  }
+
+  function render() {
+    var list = sortNews(current === 'همه' ? all : all.filter(function (n) { return n.category === current; }));
+    var hero = $('hero'), grid = $('grid');
+    hero.textContent = ''; grid.textContent = '';
+
+    if (!list.length) {
+      grid.appendChild(el('div', 'state', 'در این بخش هنوز خبری ثبت نشده است.'));
+      $('gridTitle').hidden = true;
+      return;
+    }
+
+    /* hero: latest Afghanistan story on "all", otherwise latest of the category */
+    var lead = (current === 'همه' && list.filter(function (n) { return n.category === AF; })[0]) || list[0];
+    hero.appendChild(heroCard(lead));
+
+    var rest = list.filter(function (n) { return n !== lead; });
+    if (current === 'همه') {
+      rest = rest.filter(function (n) { return n.category === AF; }).concat(rest.filter(function (n) { return n.category !== AF; }));
+    }
+    $('gridTitle').hidden = !rest.length;
+    $('gridTitle').textContent = current === 'همه' ? 'تازه‌ترین خبرها' : current;
+    rest.forEach(function (n) { grid.appendChild(newsCard(n)); });
+  }
+
+  function buildNav() {
+    var nav = $('nav');
+    CATS.forEach(function (c) {
+      var b = el('button', null, c);
+      b.type = 'button';
+      b.setAttribute('aria-current', c === current ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        current = c;
+        Array.prototype.forEach.call(nav.children, function (x) { x.setAttribute('aria-current', x === b ? 'true' : 'false'); });
+        if (history.replaceState) history.replaceState(null, '', c === 'همه' ? location.pathname : '#' + encodeURIComponent(c));
+        render();
+      });
+      nav.appendChild(b);
+    });
+  }
+
+  function buildTicker() {
+    var inner = $('tickerInner');
+    sortNews(all).slice(0, 6).forEach(function (n) { inner.appendChild(el('span', null, n.title)); });
+    $('ticker').hidden = false;
+  }
+
+  /* init */
+  var now = new Date();
+  $('today').textContent = WEEK[now.getDay()] + '، ' + solar(now);
+  $('copy').textContent = '© ' + fa(solar(now).split(' ').pop()) + ' تیتر روز. همهٔ حقوق محفوظ است.';
+
+  var h = decodeURIComponent(location.hash.slice(1));
+  if (CATS.indexOf(h) > 0) current = h;
+  buildNav();
+
+  fetch('news.json', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (data) {
+      all = (Array.isArray(data) ? data : []).filter(function (n) { return n && n.title && n.category && n.date; });
+      buildTicker();
+      render();
+    })
+    .catch(function () {
+      $('gridTitle').hidden = true;
+      $('grid').appendChild(el('div', 'state', 'بارگذاری خبرها ممکن نشد. فایل news.json را بررسی کنید و صفحه را از طریق سرور (مانند GitHub Pages) باز کنید.'));
+    });
+})();
+</script>
+</body>
+</html>
