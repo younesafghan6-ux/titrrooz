@@ -179,7 +179,6 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
 </div>
 
 <main class="wrap">
-  <section id="articleView" hidden aria-label="متن کامل خبر"></section>
   <section id="hero" aria-label="خبر برجسته"></section>
   <h2 class="sec-title" id="gridTitle">تازه‌ترین خبرها</h2>
   <section class="grid" id="grid" aria-live="polite"></section>
@@ -264,60 +263,9 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
     return h;
   }
 
-  var articleIdx = null;
-
   function openArticle(item) {
     var idx = all.indexOf(item);
-    if (idx < 0) return;
-    if (articleIdx === idx) return;
-    articleIdx = idx;
-    if (history.replaceState) history.replaceState(null, '', '#article-' + idx);
-    renderArticle();
-    window.scrollTo(0, 0);
-  }
-  function closeArticle() {
-    articleIdx = null;
-    if (history.replaceState) history.replaceState(null, '', location.pathname);
-    $('articleView').hidden = true;
-    $('articleView').textContent = '';
-    document.title = 'تیتر روز | خبرهای تازه افغانستان و جهان';
-    render();
-  }
-  function renderArticle() {
-    var item = all[articleIdx];
-    if (!item) { closeArticle(); return; }
-    document.title = item.title + ' | تیتر روز';
-    $('hero').hidden = true;
-    $('gridTitle').hidden = true;
-    $('grid').hidden = true;
-    var view = $('articleView');
-    view.hidden = false;
-    view.textContent = '';
-    var box = el('article', 'article');
-    box.appendChild(media(item));
-    var b = el('div', 'body');
-    var back = el('button', 'back-btn', '← بازگشت به خبرها');
-    back.type = 'button';
-    back.addEventListener('click', closeArticle);
-    b.appendChild(back);
-    b.appendChild(meta(item));
-    b.appendChild(el('h1', null, item.title));
-    b.appendChild(el('p', null, item.summary));
-    var share = el('div', 'share');
-    var fb = el('a', null, 'فیسبوک تیتر روز'); fb.href = 'https://www.facebook.com/mrrtfarsi'; fb.target = '_blank'; fb.rel = 'noopener';
-    var tg = el('a', null, 'تلگرام تیتر روز'); tg.href = 'https://t.me/TitrRoozNews'; tg.target = '_blank'; tg.rel = 'noopener';
-    share.appendChild(fb); share.appendChild(tg);
-    b.appendChild(share);
-    box.appendChild(b);
-    view.appendChild(box);
-    var related = sortNews(all.filter(function (n) { return n !== item && n.category === item.category; })).slice(0, 3);
-    if (!related.length) related = sortNews(all.filter(function (n) { return n !== item; })).slice(0, 3);
-    if (related.length) {
-      view.appendChild(el('h2', 'related-title', 'خبرهای مرتبط'));
-      var g = el('div', 'grid');
-      related.forEach(function (n) { g.appendChild(newsCard(n)); });
-      view.appendChild(g);
-    }
+    if (idx >= 0) window.location.href = 'article-' + idx + '.html';
   }
 
   function heroCard(item) {
@@ -354,13 +302,6 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
   }
 
   function render() {
-    if (articleIdx !== null && document.querySelector('#articleView') && !$('articleView').hidden) {
-      /* category change while reading: return to the list first */
-      articleIdx = null;
-      $('articleView').hidden = true;
-      $('articleView').textContent = '';
-      document.title = 'تیتر روز | خبرهای تازه افغانستان و جهان';
-    }
     $('hero').hidden = false;
     $('grid').hidden = false;
     var list = sortNews(current === 'همه' ? all : all.filter(function (n) { return n.category === current; }));
@@ -423,13 +364,6 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
       all = (Array.isArray(data) ? data : []).filter(function (n) { return n && n.title && n.category && n.date; });
       buildTicker();
       render();
-      var m = /^#article-(\d+)$/.exec(location.hash);
-      if (m && all[+m[1]]) openArticle(all[+m[1]]);
-      window.addEventListener('hashchange', function () {
-        var mm = /^#article-(\d+)$/.exec(location.hash);
-        if (mm && all[+mm[1]]) { articleIdx = null; openArticle(all[+mm[1]]); }
-        else if (articleIdx !== null) { articleIdx = null; closeArticle(); }
-      });
     })
     .catch(function () {
       $('gridTitle').hidden = true;
