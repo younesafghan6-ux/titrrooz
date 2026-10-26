@@ -264,9 +264,34 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
     return h;
   }
 
+  /* Back-from-article fix: remember where the reader was on the list,
+     so returning to the homepage does not restart it from the top. */
+  var savedScroll = null, savedCat = null;
+  try {
+    var _s = sessionStorage.getItem('titrrooz_scroll');
+    if (_s !== null) savedScroll = parseInt(_s, 10);
+    var _c = sessionStorage.getItem('titrrooz_cat');
+    if (_c && CATS.indexOf(_c) >= 0) savedCat = _c;
+  } catch (e) {}
+  if ('scrollRestoration' in history) { try { history.scrollRestoration = 'manual'; } catch (e) {} }
+  function restoreScroll() {
+    if (savedScroll === null || isNaN(savedScroll)) return;
+    var y = savedScroll;
+    try { sessionStorage.removeItem('titrrooz_scroll'); sessionStorage.removeItem('titrrooz_cat'); } catch (e) {}
+    savedScroll = null;
+    requestAnimationFrame(function () { setTimeout(function () { window.scrollTo(0, y); }, 60); });
+    window.addEventListener('load', function () { window.scrollTo(0, y); }, { once: true });
+  }
+
   function openArticle(item) {
     var idx = all.indexOf(item);
-    if (idx >= 0) window.location.href = 'article-' + idx + '.html';
+    if (idx >= 0) {
+      try {
+        sessionStorage.setItem('titrrooz_scroll', String(window.scrollY || window.pageYOffset || 0));
+        sessionStorage.setItem('titrrooz_cat', current);
+      } catch (e) {}
+      window.location.href = 'article-' + idx + '.html';
+    }
   }
 
   function heroCard(item) {
@@ -358,7 +383,8 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
   $('copy').textContent = '© ' + fa(solar(now).split(' ').pop()) + ' تیتر روز. همهٔ حقوق محفوظ است.';
 
   var h = decodeURIComponent(location.hash.slice(1));
-  if (CATS.indexOf(h) > 0) current = h;
+  if (savedCat) { current = savedCat; }
+  else if (CATS.indexOf(h) > 0) current = h;
   buildNav();
 
   fetch('news.json', { cache: 'no-cache' })
@@ -367,6 +393,7 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
       all = (Array.isArray(data) ? data : []).filter(function (n) { return n && n.title && n.category && n.date; });
       buildTicker();
       render();
+      restoreScroll();
     })
     .catch(function () {
       $('gridTitle').hidden = true;
