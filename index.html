@@ -293,12 +293,14 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
     return c;
   }
 
-  /* newest first; on the same day Afghanistan comes first */
+  /* newest first; on the same day Afghanistan comes first, then newest in news.json first */
   function sortNews(list) {
     return list.slice().sort(function (a, b) {
       var d = parseDate(b.date) - parseDate(a.date);
       if (d) return d;
-      return (b.category === AF) - (a.category === AF);
+      var af = (b.category === AF) - (a.category === AF);
+      if (af) return af;
+      return all.indexOf(b) - all.indexOf(a);
     });
   }
 
