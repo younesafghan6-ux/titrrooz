@@ -101,6 +101,20 @@ main{padding:24px 0 48px}
 .card,.hero{cursor:pointer}
 .state{background:var(--card);border:1px dashed #CBD5E1;border-radius:14px;padding:40px 20px;text-align:center;color:var(--muted)}
 
+/* search tab */
+.nav .search-btn{margin-inline-start:auto;display:inline-flex;align-items:center;gap:7px;background:var(--red);color:#fff;border-bottom-color:var(--red-d)}
+.nav .search-btn:hover{background:var(--red-d)}
+.nav .search-btn svg{width:17px;height:17px;fill:currentColor;flex:none}
+.search-panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:24px;box-shadow:0 2px 12px rgba(15,23,42,.06)}
+.search-box{display:flex;gap:10px;flex-wrap:wrap}
+.search-box input{flex:1;min-width:200px;font:inherit;padding:11px 16px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+.search-box input:focus{outline:none;border-color:var(--blue)}
+.search-box .clear-btn{background:var(--blue);color:#fff;border:0;border-radius:12px;padding:11px 22px;font:inherit;font-weight:700;cursor:pointer}
+.search-box .clear-btn:hover{background:var(--blue-d)}
+.search-hint{color:var(--muted);font-size:14px;margin-top:10px}
+.search-count{color:var(--blue);font-weight:700;font-size:15px;margin-top:6px}
+.search-count:empty{display:none}
+
 /* article page: full photo and details, like professional news sites */
 .article{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(15,23,42,.06)}
 .article .media{aspect-ratio:auto}
@@ -180,6 +194,14 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
 </div>
 
 <main class="wrap">
+  <section class="search-panel" id="searchPanel" hidden aria-label="جستجوی خبرها">
+    <form class="search-box" id="searchForm" role="search">
+      <input type="search" id="searchInput" placeholder="جستجو در خبرها… مثلاً: هرات، غزه، فوتبال" aria-label="واژهٔ جستجو" autocomplete="off">
+      <button type="button" class="clear-btn" id="searchClear">پاک کردن</button>
+    </form>
+    <p class="search-hint">در عنوان و متن همهٔ خبرها جستجو می‌شود. برای بستن جستجو، دوباره روی دکمهٔ «جستجو» بزن.</p>
+    <p class="search-count" id="searchCount" aria-live="polite"></p>
+  </section>
   <section id="hero" aria-label="خبر برجسته"></section>
   <h2 class="sec-title" id="gridTitle">تازه‌ترین خبرها</h2>
   <section class="grid" id="grid" aria-live="polite"></section>
@@ -212,6 +234,7 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
 
   var $ = function (id) { return document.getElementById(id); };
   var all = [], current = 'همه';
+  var searchOpen = false, searchQuery = '', searchBtn = null;
 
   /* Persian digits */
   function fa(n) { return String(n).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); }
@@ -223,6 +246,26 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
     return fa(o.day) + ' ' + MONTHS[parseInt(o.month, 10) - 1] + ' ' + fa(o.year);
   }
   function parseDate(s) { var a = String(s).split('-'); return new Date(+a[0], (+a[1] || 1) - 1, +a[2] || 1, 12); }
+
+  /* Search: forgiving Persian/Arabic matching — ي/ی, ك/ک, آ/ا, half-spaces and diacritics all count the same */
+  function norm(s) {
+    return String(s || '')
+      .replace(/ي/g, 'ی').replace(/ك/g, 'ک')
+      .replace(/ة/g, 'ه').replace(/ؤ/g, 'و').replace(/ئ/g, 'ی')
+      .replace(/[أإآ]/g, 'ا')
+      .replace(/[ً-ٰٓ]/g, '')
+      .replace(/\u200C/g, ' ')
+      .replace(/[۰-۹]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d); })
+      .replace(/[٠-٩]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(d); })
+      .toLowerCase();
+  }
+  function compact(s) { return norm(s).replace(/\s+/g, ''); }
+  function matches(item, q) {
+    var hay = compact(item.title + ' ' + item.summary + ' ' + item.category);
+    var words = norm(q).split(/\s+/).filter(Boolean);
+    if (!words.length) return false;
+    return words.every(function (w) { return hay.indexOf(w) >= 0; });
+  }
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -266,18 +309,20 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
 
   /* Back-from-article fix: remember where the reader was on the list,
      so returning to the homepage does not restart it from the top. */
-  var savedScroll = null, savedCat = null;
+  var savedScroll = null, savedCat = null, savedSearch = null;
   try {
     var _s = sessionStorage.getItem('titrrooz_scroll');
     if (_s !== null) savedScroll = parseInt(_s, 10);
     var _c = sessionStorage.getItem('titrrooz_cat');
     if (_c && CATS.indexOf(_c) >= 0) savedCat = _c;
+    var _q = sessionStorage.getItem('titrrooz_search');
+    if (_q) savedSearch = _q;
   } catch (e) {}
   if ('scrollRestoration' in history) { try { history.scrollRestoration = 'manual'; } catch (e) {} }
   function restoreScroll() {
     if (savedScroll === null || isNaN(savedScroll)) return;
     var y = savedScroll;
-    try { sessionStorage.removeItem('titrrooz_scroll'); sessionStorage.removeItem('titrrooz_cat'); } catch (e) {}
+    try { sessionStorage.removeItem('titrrooz_scroll'); sessionStorage.removeItem('titrrooz_cat'); sessionStorage.removeItem('titrrooz_search'); } catch (e) {}
     savedScroll = null;
     requestAnimationFrame(function () { setTimeout(function () { window.scrollTo(0, y); }, 60); });
     window.addEventListener('load', function () { window.scrollTo(0, y); }, { once: true });
@@ -289,6 +334,8 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
       try {
         sessionStorage.setItem('titrrooz_scroll', String(window.scrollY || window.pageYOffset || 0));
         sessionStorage.setItem('titrrooz_cat', current);
+        if (searchOpen && norm(searchQuery).trim()) sessionStorage.setItem('titrrooz_search', searchQuery);
+        else sessionStorage.removeItem('titrrooz_search');
       } catch (e) {}
       window.location.href = 'article-' + idx + '.html';
     }
@@ -329,7 +376,45 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
     });
   }
 
+  function renderResults() {
+    var q = searchQuery.trim();
+    var list = sortNews(all.filter(function (n) { return matches(n, q); }));
+    var hero = $('hero'), grid = $('grid');
+    hero.hidden = true; hero.textContent = '';
+    grid.hidden = false; grid.textContent = '';
+    $('gridTitle').hidden = false;
+    $('gridTitle').textContent = 'نتایج جستجو';
+    $('searchCount').textContent = list.length ? fa(list.length) + ' خبر برای «' + q + '» پیدا شد.' : '';
+    if (!list.length) {
+      grid.appendChild(el('div', 'state', 'برای «' + q + '» خبری پیدا نشد. واژه‌ای کوتاه‌تر یا واژهٔ دیگری را امتحان کن.'));
+      return;
+    }
+    list.forEach(function (n) { grid.appendChild(newsCard(n)); });
+  }
+
+  function toggleSearch(force) {
+    var open = typeof force === 'boolean' ? force : !searchOpen;
+    searchOpen = open;
+    $('searchPanel').hidden = !open;
+    if (searchBtn) {
+      searchBtn.setAttribute('aria-current', open ? 'true' : 'false');
+      searchBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    var nav = $('nav');
+    if (open) {
+      Array.prototype.forEach.call(nav.children, function (x) { if (x !== searchBtn) x.setAttribute('aria-current', 'false'); });
+      var inp = $('searchInput');
+      if (inp.value !== searchQuery) inp.value = searchQuery;
+      setTimeout(function () { inp.focus(); }, 30);
+    } else {
+      Array.prototype.forEach.call(nav.children, function (x) { x.setAttribute('aria-current', x.textContent === current ? 'true' : 'false'); });
+    }
+    render();
+  }
+
   function render() {
+    if (searchOpen && norm(searchQuery).trim()) { renderResults(); return; }
+    var sc = $('searchCount'); if (sc) sc.textContent = '';
     $('hero').hidden = false;
     $('grid').hidden = false;
     var list = sortNews(current === 'همه' ? all : all.filter(function (n) { return n.category === current; }));
@@ -363,12 +448,28 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
       b.setAttribute('aria-current', c === current ? 'true' : 'false');
       b.addEventListener('click', function () {
         current = c;
+        searchOpen = false;
+        $('searchPanel').hidden = true;
+        if (searchBtn) { searchBtn.setAttribute('aria-current', 'false'); searchBtn.setAttribute('aria-expanded', 'false'); }
         Array.prototype.forEach.call(nav.children, function (x) { x.setAttribute('aria-current', x === b ? 'true' : 'false'); });
         if (history.replaceState) history.replaceState(null, '', c === 'همه' ? location.pathname : '#' + encodeURIComponent(c));
         render();
       });
       nav.appendChild(b);
     });
+    var sb = el('button', 'search-btn', 'جستجو');
+    sb.type = 'button';
+    sb.setAttribute('aria-current', 'false');
+    sb.setAttribute('aria-expanded', 'false');
+    sb.setAttribute('aria-controls', 'searchPanel');
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.innerHTML = '<path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/>';
+    sb.insertBefore(svg, sb.firstChild);
+    sb.addEventListener('click', function () { toggleSearch(); });
+    nav.appendChild(sb);
+    searchBtn = sb;
   }
 
   function buildTicker() {
@@ -386,6 +487,25 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
   if (savedCat) { current = savedCat; }
   else if (CATS.indexOf(h) > 0) current = h;
   buildNav();
+
+  /* search wiring */
+  $('searchForm').addEventListener('submit', function (e) { e.preventDefault(); });
+  var sInp = $('searchInput');
+  sInp.addEventListener('input', function () { searchQuery = sInp.value; render(); });
+  sInp.addEventListener('keydown', function (e) { if (e.key === 'Escape') { sInp.value = ''; searchQuery = ''; render(); } });
+  $('searchClear').addEventListener('click', function () { sInp.value = ''; searchQuery = ''; render(); sInp.focus(); });
+  var initialQ = savedSearch;
+  if (!initialQ) { try { initialQ = new URLSearchParams(location.search).get('q'); } catch (e) {} }
+  if (initialQ) {
+    searchQuery = initialQ; sInp.value = initialQ;
+    searchOpen = true; $('searchPanel').hidden = false;
+    if (searchBtn) { searchBtn.setAttribute('aria-current', 'true'); searchBtn.setAttribute('aria-expanded', 'true'); }
+    Array.prototype.forEach.call($('nav').children, function (x) { if (x !== searchBtn) x.setAttribute('aria-current', 'false'); });
+  } else if (h === 'جستجو' || h === 'search') {
+    searchOpen = true; $('searchPanel').hidden = false;
+    if (searchBtn) { searchBtn.setAttribute('aria-current', 'true'); searchBtn.setAttribute('aria-expanded', 'true'); }
+    Array.prototype.forEach.call($('nav').children, function (x) { if (x !== searchBtn) x.setAttribute('aria-current', 'false'); });
+  }
 
   fetch('news.json', { cache: 'no-cache' })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
