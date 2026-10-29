@@ -75,6 +75,7 @@ main{padding:24px 0 48px}
 .badge.b-جهان{background:var(--blue)}
 .badge.b-غزه-و-فلسطین{background:#0F7A4B}
 .badge.b-ورزش{background:#B45309}
+.badge.b-تکنولوژی{background:#7C3AED}
 
 /* grid */
 .sec-title{display:flex;align-items:center;gap:12px;margin-bottom:16px;font-family:var(--display);font-size:28px;color:var(--blue)}
@@ -90,6 +91,22 @@ main{padding:24px 0 48px}
 .card h3 a:hover,.hero h1 a:hover{color:var(--red)}
 .card,.hero{cursor:pointer}
 .state{background:var(--card);border:1px dashed #CBD5E1;border-radius:14px;padding:40px 20px;text-align:center;color:var(--muted)}
+
+/* search tab */
+.nav .search-btn{margin-inline-start:auto;display:inline-flex;align-items:center;gap:7px;background:var(--red);color:#fff;border-bottom-color:var(--red-d)}
+.nav .search-btn:hover{background:var(--red-d)}
+.nav .search-btn svg{width:17px;height:17px;fill:currentColor;flex:none}
+.search-panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:24px;box-shadow:0 2px 12px rgba(15,23,42,.06)}
+.search-box{display:flex;gap:10px;flex-wrap:wrap}
+.search-box input{flex:1;min-width:200px;font:inherit;padding:11px 16px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+.search-box input:focus{outline:none;border-color:var(--blue)}
+.search-box .clear-btn{background:var(--blue);color:#fff;border:0;border-radius:12px;padding:11px 22px;font:inherit;font-weight:700;cursor:pointer}
+.search-box .clear-btn:hover{background:var(--blue-d)}
+.search-hint{color:var(--muted);font-size:14px;margin-top:10px}
+.search-count{color:var(--blue);font-weight:700;font-size:15px;margin-top:6px}
+.search-count:empty{display:none}
+.share-mini{align-self:flex-start;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 14px;font:inherit;font-size:13.5px;font-weight:700;color:var(--blue);cursor:pointer}
+.share-mini:hover{border-color:var(--red);color:var(--red)}
 
 /* article page: full photo and details, like professional news sites */
 .article{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(15,23,42,.06)}
@@ -137,6 +154,10 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
 .rel:hover{color:var(--red)}
 .article-page{max-width:860px;margin:0 auto;padding:24px 16px 48px}
 .ai-note{font-size:13px;color:#666;margin:8px 0 0}
+.share{align-items:center}
+.share .share-label{font-weight:700;color:var(--muted);font-size:14px}
+.share button{display:inline-flex;padding:6px 16px;border:1px solid var(--line);border-radius:999px;font:inherit;font-weight:700;font-size:14px;background:#fff;color:inherit;cursor:pointer}
+.share button:hover{border-color:var(--red);color:var(--red)}
 </style>
 </head>
 <body>
@@ -150,7 +171,7 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
 <div class="meta"><span class="badge b-افغانستان">افغانستان</span><time datetime="2026-10-25" id="artdate">2026-10-25</time></div>
 <h1>کمبود سردخانه، محصولات باغی را در معرض خرابی قرار داده است</h1>
 <p>باغداران می‌گویند نبود سردخانه کافی باعث می‌شود محصولات تازه پیش از رسیدن به بازار خراب شود. آنان خواستار سرمایه‌گذاری بیشتر در نگهداری و انتقال محصولات هستند.</p>
-<div class="share"><a href="https://www.facebook.com/mrrtfarsi" target="_blank" rel="noopener">فیسبوک تیتر روز</a><a href="https://t.me/TitrRoozNews" target="_blank" rel="noopener">تلگرام تیتر روز</a></div>
+<div class="share"><span class="share-label">این خبر را به اشتراک بگذارید:</span><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyounesafghan6-ux.github.io%2Ftitrrooz%2Farticle-9.html" target="_blank" rel="noopener">فیسبوک</a><a href="https://t.me/share/url?url=https%3A%2F%2Fyounesafghan6-ux.github.io%2Ftitrrooz%2Farticle-9.html&text=%DA%A9%D9%85%D8%A8%D9%88%D8%AF%20%D8%B3%D8%B1%D8%AF%D8%AE%D8%A7%D9%86%D9%87%D8%8C%20%D9%85%D8%AD%D8%B5%D9%88%D9%84%D8%A7%D8%AA%20%D8%A8%D8%A7%D8%BA%DB%8C%20%D8%B1%D8%A7%20%D8%AF%D8%B1%20%D9%85%D8%B9%D8%B1%D8%B6%20%D8%AE%D8%B1%D8%A7%D8%A8%DB%8C%20%D9%82%D8%B1%D8%A7%D8%B1%20%D8%AF%D8%A7%D8%AF%D9%87%20%D8%A7%D8%B3%D8%AA" target="_blank" rel="noopener">تلگرام</a><a href="https://wa.me/?text=%DA%A9%D9%85%D8%A8%D9%88%D8%AF%20%D8%B3%D8%B1%D8%AF%D8%AE%D8%A7%D9%86%D9%87%D8%8C%20%D9%85%D8%AD%D8%B5%D9%88%D9%84%D8%A7%D8%AA%20%D8%A8%D8%A7%D8%BA%DB%8C%20%D8%B1%D8%A7%20%D8%AF%D8%B1%20%D9%85%D8%B9%D8%B1%D8%B6%20%D8%AE%D8%B1%D8%A7%D8%A8%DB%8C%20%D9%82%D8%B1%D8%A7%D8%B1%20%D8%AF%D8%A7%D8%AF%D9%87%20%D8%A7%D8%B3%D8%AA%20https%3A%2F%2Fyounesafghan6-ux.github.io%2Ftitrrooz%2Farticle-9.html" target="_blank" rel="noopener">واتس‌اپ</a><button type="button" class="share-copy" data-url="https://younesafghan6-ux.github.io/titrrooz/article-9.html">کپی لینک</button><button type="button" class="share-native" data-url="https://younesafghan6-ux.github.io/titrrooz/article-9.html" data-title="کمبود سردخانه، محصولات باغی را در معرض خرابی قرار داده است">اشتراک‌گذاری</button></div>
 </div>
 </article>
 <h2 class="related-title">خبرهای مرتبط</h2>
@@ -165,6 +186,10 @@ function solar(d){var p=new Intl.DateTimeFormat('en-u-ca-persian-nu-latn',{year:
 var a='2026-10-25'.split('-');var dt=new Date(+a[0],(+a[1]||1)-1,+a[2]||1,12);
 document.getElementById('artdate').textContent=solar(dt);
 document.getElementById('today').textContent=solar(new Date());
+var cu=document.querySelector('.share-copy');
+if(cu){cu.addEventListener('click',function(){var u=cu.getAttribute('data-url');function done(){cu.textContent='کپی شد!';setTimeout(function(){cu.textContent='کپی لینک';},2000);}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,done);}else{var ta=document.createElement('textarea');ta.value=u;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();done();}});}
+var nv=document.querySelector('.share-native');
+if(nv){if(!navigator.share){nv.style.display='none';}else{nv.addEventListener('click',function(){navigator.share({title:nv.getAttribute('data-title'),url:nv.getAttribute('data-url')}).catch(function(){});});}}
 })();
 </script>
 <script data-goatcounter="https://titr-rooz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
