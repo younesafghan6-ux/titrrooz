@@ -75,6 +75,7 @@ main{padding:24px 0 48px}
 .badge.b-جهان{background:var(--blue)}
 .badge.b-غزه-و-فلسطین{background:#0F7A4B}
 .badge.b-ورزش{background:#B45309}
+.badge.b-تکنولوژی{background:#7C3AED}
 
 /* grid */
 .sec-title{display:flex;align-items:center;gap:12px;margin-bottom:16px;font-family:var(--display);font-size:28px;color:var(--blue)}
@@ -90,6 +91,22 @@ main{padding:24px 0 48px}
 .card h3 a:hover,.hero h1 a:hover{color:var(--red)}
 .card,.hero{cursor:pointer}
 .state{background:var(--card);border:1px dashed #CBD5E1;border-radius:14px;padding:40px 20px;text-align:center;color:var(--muted)}
+
+/* search tab */
+.nav .search-btn{margin-inline-start:auto;display:inline-flex;align-items:center;gap:7px;background:var(--red);color:#fff;border-bottom-color:var(--red-d)}
+.nav .search-btn:hover{background:var(--red-d)}
+.nav .search-btn svg{width:17px;height:17px;fill:currentColor;flex:none}
+.search-panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:24px;box-shadow:0 2px 12px rgba(15,23,42,.06)}
+.search-box{display:flex;gap:10px;flex-wrap:wrap}
+.search-box input{flex:1;min-width:200px;font:inherit;padding:11px 16px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+.search-box input:focus{outline:none;border-color:var(--blue)}
+.search-box .clear-btn{background:var(--blue);color:#fff;border:0;border-radius:12px;padding:11px 22px;font:inherit;font-weight:700;cursor:pointer}
+.search-box .clear-btn:hover{background:var(--blue-d)}
+.search-hint{color:var(--muted);font-size:14px;margin-top:10px}
+.search-count{color:var(--blue);font-weight:700;font-size:15px;margin-top:6px}
+.search-count:empty{display:none}
+.share-mini{align-self:flex-start;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 14px;font:inherit;font-size:13.5px;font-weight:700;color:var(--blue);cursor:pointer}
+.share-mini:hover{border-color:var(--red);color:var(--red)}
 
 /* article page: full photo and details, like professional news sites */
 .article{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(15,23,42,.06)}
@@ -137,6 +154,10 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
 .rel:hover{color:var(--red)}
 .article-page{max-width:860px;margin:0 auto;padding:24px 16px 48px}
 .ai-note{font-size:13px;color:#666;margin:8px 0 0}
+.share{align-items:center}
+.share .share-label{font-weight:700;color:var(--muted);font-size:14px}
+.share button{display:inline-flex;padding:6px 16px;border:1px solid var(--line);border-radius:999px;font:inherit;font-weight:700;font-size:14px;background:#fff;color:inherit;cursor:pointer}
+.share button:hover{border-color:var(--red);color:var(--red)}
 </style>
 </head>
 <body>
@@ -150,7 +171,7 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
 <div class="meta"><span class="badge b-جهان">جهان</span><time datetime="2026-10-29" id="artdate">2026-10-29</time></div>
 <h1>هشدار دفاع مدنی عربستان درباره «خطر احتمالی» در نجران و شرق این کشور</h1>
 <p>سازمان دفاع مدنی عربستان سعودی درباره «خطر احتمالی» در نجران در جنوب غربی این کشور و استان‌های شرقی هشدار داد و از ساکنان این مناطق خواست به نزدیک‌ترین مکان امن پناه ببرند. این هشدار همزمان با ادامه حملات حوثی‌های یمن به فرودگاه‌ها، بنادر و تأسیسات نفتی عربستان صادر شده است؛ حملاتی که در روزهای اخیر با رهگیری موشک‌ها و پهپادها بر فراز ریاض و دیگر شهرها همراه بوده است. ائتلاف به رهبری عربستان اعلام کرد یک موشک بالستیک حوثی‌ها به سمت شرق این کشور را رهگیری و منهدم کرده است. رسانه‌های داخل ایران نیز از چند انفجار در پالایشگاه راس تنوره در شرق عربستان خبر داده‌اند که علت آن حملات حوثی‌ها عنوان شده است؛ ادعایی که مقام‌های سعودی به‌صورت مستقل تأیید نکرده‌اند. نجران و استان شرقی از مناطق مرزی و نفتی حساس عربستان به شمار می‌روند و هرگونه تهدید در آن‌ها، نگرانی‌ها درباره امنیت زیرساخت‌های انرژی و مسیرهای هوایی منطقه را افزایش می‌دهد.</p>
-<div class="share"><a href="https://www.facebook.com/mrrtfarsi" target="_blank" rel="noopener">فیسبوک تیتر روز</a><a href="https://t.me/TitrRoozNews" target="_blank" rel="noopener">تلگرام تیتر روز</a></div>
+<div class="share"><span class="share-label">این خبر را به اشتراک بگذارید:</span><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyounesafghan6-ux.github.io%2Ftitrrooz%2Farticle-238.html" target="_blank" rel="noopener">فیسبوک</a><a href="https://t.me/share/url?url=https%3A%2F%2Fyounesafghan6-ux.github.io%2Ftitrrooz%2Farticle-238.html&text=%D9%87%D8%B4%D8%AF%D8%A7%D8%B1%20%D8%AF%D9%81%D8%A7%D8%B9%20%D9%85%D8%AF%D9%86%DB%8C%20%D8%B9%D8%B1%D8%A8%D8%B3%D8%AA%D8%A7%D9%86%20%D8%AF%D8%B1%D8%A8%D8%A7%D8%B1%D9%87%20%C2%AB%D8%AE%D8%B7%D8%B1%20%D8%A7%D8%AD%D8%AA%D9%85%D8%A7%D9%84%DB%8C%C2%BB%20%D8%AF%D8%B1%20%D9%86%D8%AC%D8%B1%D8%A7%D9%86%20%D9%88%20%D8%B4%D8%B1%D9%82%20%D8%A7%DB%8C%D9%86%20%DA%A9%D8%B4%D9%88%D8%B1" target="_blank" rel="noopener">تلگرام</a><a href="https://wa.me/?text=%D9%87%D8%B4%D8%AF%D8%A7%D8%B1%20%D8%AF%D9%81%D8%A7%D8%B9%20%D9%85%D8%AF%D9%86%DB%8C%20%D8%B9%D8%B1%D8%A8%D8%B3%D8%AA%D8%A7%D9%86%20%D8%AF%D8%B1%D8%A8%D8%A7%D8%B1%D9%87%20%C2%AB%D8%AE%D8%B7%D8%B1%20%D8%A7%D8%AD%D8%AA%D9%85%D8%A7%D9%84%DB%8C%C2%BB%20%D8%AF%D8%B1%20%D9%86%D8%AC%D8%B1%D8%A7%D9%86%20%D9%88%20%D8%B4%D8%B1%D9%82%20%D8%A7%DB%8C%D9%86%20%DA%A9%D8%B4%D9%88%D8%B1%20https%3A%2F%2Fyounesafghan6-ux.github.io%2Ftitrrooz%2Farticle-238.html" target="_blank" rel="noopener">واتس‌اپ</a><button type="button" class="share-copy" data-url="https://younesafghan6-ux.github.io/titrrooz/article-238.html">کپی لینک</button><button type="button" class="share-native" data-url="https://younesafghan6-ux.github.io/titrrooz/article-238.html" data-title="هشدار دفاع مدنی عربستان درباره «خطر احتمالی» در نجران و شرق این کشور">اشتراک‌گذاری</button></div>
 </div>
 </article>
 <h2 class="related-title">خبرهای مرتبط</h2>
@@ -165,6 +186,10 @@ function solar(d){var p=new Intl.DateTimeFormat('en-u-ca-persian-nu-latn',{year:
 var a='2026-10-29'.split('-');var dt=new Date(+a[0],(+a[1]||1)-1,+a[2]||1,12);
 document.getElementById('artdate').textContent=solar(dt);
 document.getElementById('today').textContent=solar(new Date());
+var cu=document.querySelector('.share-copy');
+if(cu){cu.addEventListener('click',function(){var u=cu.getAttribute('data-url');function done(){cu.textContent='کپی شد!';setTimeout(function(){cu.textContent='کپی لینک';},2000);}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,done);}else{var ta=document.createElement('textarea');ta.value=u;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();done();}});}
+var nv=document.querySelector('.share-native');
+if(nv){if(!navigator.share){nv.style.display='none';}else{nv.addEventListener('click',function(){navigator.share({title:nv.getAttribute('data-title'),url:nv.getAttribute('data-url')}).catch(function(){});});}}
 })();
 </script>
 <script data-goatcounter="https://titr-rooz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
