@@ -73,6 +73,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--red);outline-offset
 .ticker-track{overflow:hidden;flex:1}
 .ticker-inner{display:inline-flex;gap:48px;white-space:nowrap;padding-inline-start:100%;animation:tick 60s linear infinite;font-size:14.5px;font-weight:500}
 .ticker-inner:hover{animation-play-state:paused}
+.ticker-inner a{color:#fff;text-decoration:none;cursor:pointer}
+.ticker-inner a:hover{text-decoration:underline}
 @keyframes tick{to{transform:translateX(100%)}}
 
 /* hero */
@@ -507,7 +509,13 @@ footer .social a{border-color:rgba(255,255,255,.3);color:#fff}
 
   function buildTicker() {
     var inner = $('tickerInner');
-    sortNews(all).slice(0, 6).forEach(function (n) { inner.appendChild(el('span', null, n.title)); });
+    /* یونس ۲۰۲۶-۱۱-۱۰: تیترهای متحرک فقط از خبرهای افغانستان و جهان باشند و هر تیتر به خودِ همان خبر لینک شود */
+    var picks = sortNews(all.filter(function (n) { return n.category === AF || n.category === 'جهان'; })).slice(0, 6);
+    picks.forEach(function (n) {
+      var a = el('a', null, n.title);
+      a.href = 'article-' + all.indexOf(n) + '.html';
+      inner.appendChild(a);
+    });
     $('ticker').hidden = false;
   }
 
